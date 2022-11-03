@@ -1,0 +1,53 @@
+{
+    "display": "RICQ.259689.001",
+    "product": "iarim",
+    "device": "sagit",
+    "board": "eomam",
+    "model": "MI 6",
+    "finger_print": "xiaomi/iarim/sagit:10/eomam.200122.001/3317081:user/release-keys",
+    "boot_id": "28171ecc-587b-bedb-5ff5-1df599981adb",
+    "proc_version": "Linux 5.4.0-54-generic-h0lUblgE (android-build@google.com)",
+    "imei": "997813652940269",
+    "brand": "Xiaomi",
+    "bootloader": "U-boot",
+    "base_band": "",
+    "version": {
+        "incremental": "5891938",
+        "release": "10",
+        "codename": "REL",
+        "sdk": 29
+    },
+    "sim_info": "T-Mobile",
+    "os_type": "android",
+    "mac_address": "00:50:56:C0:00:08",
+    "ip_address": [
+        10,
+        0,
+        1,
+        3
+    ],
+    "wifi_bssid": "00:50:56:C0:00:08",
+    "wifi_ssid": "<unknown ssid>",
+    "imsi_md5": [
+        72,
+        236,
+        94,
+        172,
+        109,
+        167,
+        123,
+        215,
+        18,
+        11,
+        246,
+        233,
+        118,
+        204,
+        191,
+        7
+    ],
+    "android_id": "c336dd3c48d123ee",
+    "apn": "wifi",
+    "vendor_name": "MIUI",
+    "vendor_os_name": "ricq"
+}

@@ -1,0 +1,21 @@
+[package]
+name = "mo_bot"
+version = "0.1.0"
+edition = "2021"
+authors = ["Ns2Kracy <2220496937@qq.com>"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.66"
+lazy_static = "1.4.0"
+proc_qq = "0.1.19"
+redis = "0.22.1"
+reqwest = { version = "0.11.12", default-features = false, features = ["__rustls"] }
+serde = { version = "1.0.147", features = ["derive"] }
+serde_json = "1.0.87"
+serde_yaml = "0.9.14"
+surrealdb = "1.0.0-beta.8"
+tokio = { version = "1.21.2", features = ["full"] }
+tracing = "0.1.37"
+tracing-subscriber = "0.3.16"
