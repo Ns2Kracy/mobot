@@ -1,10 +1,11 @@
 use proc_qq::re_exports::ricq::version::MACOS;
 use proc_qq::*;
 
-use darling_bot::modules;
-use darling_bot::result_handlers;
-use darling_bot::init_tracing_subscriber;
-
+use mobot::init_tracing_subscriber;
+use mobot::modules;
+use mobot::on_result;
+#[allow(unused_imports)]
+use mobot::server;
 
 #[tokio::main]
 async fn main() {
@@ -15,7 +16,7 @@ async fn main() {
         .device(DeviceSource::JsonFile("device.json".to_owned()))
         .version(&MACOS)
         .modules(modules::all_modules())
-        .result_handlers(vec![result_handlers::on_result {}.into()])
+        .result_handlers(vec![on_result {}.into()])
         .build()
         .await
         .unwrap()
@@ -24,5 +25,3 @@ async fn main() {
         .unwrap()
         .unwrap();
 }
-
-

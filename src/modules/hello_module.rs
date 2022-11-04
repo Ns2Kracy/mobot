@@ -15,9 +15,9 @@ async fn login(event: &LoginEvent) -> anyhow::Result<bool> {
 #[event]
 async fn print(event: &MessageEvent) -> anyhow::Result<bool> {
     let content = event.message_content();
-    if content.eq("你好") {
+    if content.eq("龙龙") {
         event
-            .send_message_to_source("世界".parse_message_chain())
+            .send_message_to_source("daisuki".parse_message_chain())
             .await?;
         Ok(true)
     } else if content.eq("RC") {

@@ -1,9 +1,12 @@
+use proc_qq::result;
+use proc_qq::EventResult;
 use tracing::Level;
 use tracing_subscriber::layer::SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
 
 pub mod modules;
-pub mod result_handlers;
+pub mod server;
+pub mod utils;
 
 pub fn init_tracing_subscriber() {
     tracing_subscriber::registry()
@@ -20,4 +23,22 @@ pub fn init_tracing_subscriber() {
                 .with_target("darling_bot", Level::DEBUG),
         )
         .init();
+}
+
+#[result]
+pub async fn on_result(result: &EventResult) -> anyhow::Result<bool> {
+    match result {
+        EventResult::Process(info) => {
+            tracing::info!("{} : {} : 处理了一条消息", info.module_id, info.handle_name);
+        }
+        EventResult::Exception(info, err) => {
+            tracing::info!(
+                "{} : {} : 遇到了错误 : {}",
+                info.module_id,
+                info.handle_name,
+                err
+            );
+        }
+    }
+    Ok(false)
 }
