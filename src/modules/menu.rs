@@ -1,4 +1,5 @@
 use crate::modules::all_modules;
+use anyhow::Ok;
 use proc_qq::{
     event, module, MessageChainParseTrait, MessageContentTrait, MessageEvent,
     MessageSendToSourceTrait, Module,
@@ -8,7 +9,24 @@ static ID: &'static str = "menu";
 static NAME: &'static str = "菜单";
 
 pub fn module() -> Module {
-    module!(ID, NAME, on_message)
+    module!(ID, NAME, on_message, print_menu)
+}
+
+#[event]
+async fn print_menu(event: &MessageEvent) -> anyhow::Result<bool> {
+    let content = event.message_content();
+    if content.eq("/menu") {
+        let mut menu: Vec<String> = Vec::new();
+        for mu in all_modules().as_ref() {
+            menu.push(format!("{}", mu.name))
+        }
+        event
+            .send_message_to_source(menu.join("").parse_message_chain())
+            .await?;
+        Ok(true)
+    } else {
+        Ok(false)
+    }
 }
 
 #[event]

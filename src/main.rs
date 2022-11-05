@@ -12,7 +12,8 @@ async fn main() {
     init_tracing_subscriber();
     ClientBuilder::new()
         .authentication(Authentication::QRCode)
-        .show_rq(ShowQR::OpenBySystem)
+        //.authentication(Authentication::UinPassword(2675471480, "ns2kracy".to_string()))
+        .show_rq(ShowQR::PrintToConsole)
         .device(DeviceSource::JsonFile("device.json".to_owned()))
         .version(&MACOS)
         .modules(modules::all_modules())

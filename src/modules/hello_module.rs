@@ -3,9 +3,12 @@ use proc_qq::re_exports::ricq::client::event::GroupMessageEvent;
 use proc_qq::re_exports::tracing;
 use proc_qq::{
     event, module, LoginEvent, MessageChainParseTrait, MessageContentTrait, MessageEvent,
-    MessageEventProcess, MessageSendToSourceTrait, Module,
+    MessageEventProcess, MessageSendToSourceTrait, Module, MessageChainAppendTrait, TextEleParseTrait,
 };
 
+use crate::utils::CanReply;
+static NAME: &'static str = "ping";
+static MENU: &'static str = "ping";
 #[event]
 async fn login(event: &LoginEvent) -> anyhow::Result<bool> {
     tracing::info!("登录成功了 : {}", event.uin);
@@ -15,9 +18,14 @@ async fn login(event: &LoginEvent) -> anyhow::Result<bool> {
 #[event]
 async fn print(event: &MessageEvent) -> anyhow::Result<bool> {
     let content = event.message_content();
-    if content.eq("龙龙") {
+    if content.eq(NAME) {
         event
-            .send_message_to_source("daisuki".parse_message_chain())
+            .send_message_to_source(event.make_reply_chain().await.append(MENU.parse_text()))
+            .await?;
+        Ok(true)
+    } else if content.eq("ping") {
+        event
+            .send_message_to_source("pong".parse_message_chain())
             .await?;
         Ok(true)
     } else if content.eq("RC") {
