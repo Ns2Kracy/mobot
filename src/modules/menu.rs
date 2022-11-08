@@ -1,46 +1,31 @@
 use crate::modules::all_modules;
-use anyhow::Ok;
 use proc_qq::{
     event, module, MessageChainParseTrait, MessageContentTrait, MessageEvent,
     MessageSendToSourceTrait, Module,
 };
 
-static ID: &'static str = "menu";
-static NAME: &'static str = "菜单";
+use super::types::{ID, NAME};
+
+static ID: ID = "menu";
+static NAME: NAME = "菜单";
 
 pub fn module() -> Module {
-    module!(ID, NAME, on_message, print_menu)
-}
-
-#[event]
-async fn print_menu(event: &MessageEvent) -> anyhow::Result<bool> {
-    let content = event.message_content();
-    if content.eq("/menu") {
-        let mut menu: Vec<String> = Vec::new();
-        for mu in all_modules().as_ref() {
-            menu.push(format!("{}", mu.name))
-        }
-        event
-            .send_message_to_source(menu.join("").parse_message_chain())
-            .await?;
-        Ok(true)
-    } else {
-        Ok(false)
-    }
+    module!(ID, NAME, on_message)
 }
 
 #[event]
 async fn on_message(event: &MessageEvent) -> anyhow::Result<bool> {
     let content = event.message_content();
     if content.eq(NAME) {
-        let mut result = vec!["菜单 (请直接回复功能名) : ".to_owned()];
-        for m in all_modules().as_ref() {
-            if m.name != "" {
-                result.push(format!("\n ❤️ {}", m.name));
+        // 后续考虑使用更好看的格式并且以图片形式发送
+        let mut menu = vec!["菜单(请直接回复功能名): ".to_owned()];
+        for (module_index, module) in all_modules().as_ref().iter().enumerate() {
+            if module.name != "" {
+                menu.push(format!("\n {}. {}", module_index, module.name));
             }
         }
         event
-            .send_message_to_source(result.join("").parse_message_chain())
+            .send_message_to_source(menu.join("").parse_message_chain())
             .await?;
         Ok(true)
     } else {

@@ -7,6 +7,8 @@ use proc_qq::{
     MessageSendToSourceTrait, TextEleParseTrait,
 };
 
+mod local;
+
 #[async_trait]
 pub(crate) trait CanReply {
     async fn make_reply_chain(&self) -> MessageChain;

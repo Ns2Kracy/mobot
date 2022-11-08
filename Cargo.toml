@@ -9,7 +9,6 @@ authors = ["Ns2Kracy <2220496937@qq.com>"]
 [dependencies]
 anyhow = "1.0.66"
 lazy_static = "1.4.0"
-proc_qq = "0.1.19"
 regex = "1.6.0"
 reqwest = { version = "0.11.12", default-features = false, features = [
     "__rustls",
@@ -20,3 +19,10 @@ serde_yaml = "0.9.14"
 tokio = { version = "1.21.2", features = ["full"] }
 tracing = "0.1.37"
 tracing-subscriber = "0.3.16"
+# surrealdb = {version = "1.0.0-beta.8", default-features=false, features = ['parallel', 'kv-mem'] }
+proc_qq = "0.1.19"
+actix = "0.13.0"
+actix-web = "4.2.1"
+serde_derive = "1.0.147"
+once_cell = "1.16.0"
+redis = { version = "0.22.1", features = ["tokio-comp"] }

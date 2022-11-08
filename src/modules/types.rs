@@ -1,3 +1,3 @@
-pub type ID = &'static str;
-pub type NAME = &'static str;
-pub type MENU = &'static str;
+/// 通用的用于定义ID和Name
+pub(crate) type ID = &'static str;
+pub(crate) type NAME = &'static str;

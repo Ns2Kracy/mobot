@@ -1,28 +1,56 @@
-use proc_qq::re_exports::ricq::version::MACOS;
-use proc_qq::*;
+use std::sync::Arc;
 
-use mobot::init_tracing_subscriber;
+use mobot::config::load_config;
+use mobot::database::redis::init_redis;
 use mobot::modules;
-use mobot::on_result;
+use proc_qq::re_exports::ricq::version::MACOS;
 #[allow(unused_imports)]
-use mobot::server;
+use proc_qq::Authentication::{QRCode, UinPassword};
+use proc_qq::*;
+use tracing::Level;
+use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
+use tracing_subscriber::util::SubscriberInitExt;
 
 #[tokio::main]
-async fn main() {
+async fn main() -> anyhow::Result<()> {
     init_tracing_subscriber();
-    ClientBuilder::new()
-        .authentication(Authentication::QRCode)
-        //.authentication(Authentication::UinPassword(2675471480, "ns2kracy".to_string()))
-        .show_rq(ShowQR::PrintToConsole)
+    let config = load_config().await?;
+    init_redis(&config.redis).await?;
+
+    let client = ClientBuilder::new()
         .device(DeviceSource::JsonFile("device.json".to_owned()))
         .version(&MACOS)
+        .priority_session("session.token")
+        .authentication(UinPassword(config.account.uin, config.account.password))
+        .show_slider_pop_menu_if_possible()
+        // .authentication(QRCode)
+        // .show_rq(ShowQR::PrintToConsole)
         .modules(modules::all_modules())
-        .result_handlers(vec![on_result {}.into()])
         .build()
         .await
-        .unwrap()
-        .start()
-        .await
-        .unwrap()
         .unwrap();
+    // 可以做一些定时任务, rq_client在一开始可能没有登录好
+    let client = Arc::new(client);
+    let copy = client.clone();
+    tokio::spawn(async move {
+        println!("{}", copy.rq_client.start_time);
+    });
+    run_client(client).await?;
+    Ok(())
+}
+
+fn init_tracing_subscriber() {
+    tracing_subscriber::registry()
+        .with(
+            tracing_subscriber::fmt::layer()
+                .with_target(true)
+                .without_time(),
+        )
+        .with(
+            tracing_subscriber::filter::Targets::new()
+                .with_target("ricq", Level::DEBUG)
+                .with_target("proc_qq", Level::DEBUG)
+                .with_target("mobot", Level::DEBUG),
+        )
+        .init();
 }
