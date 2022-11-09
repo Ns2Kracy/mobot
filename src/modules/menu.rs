@@ -10,11 +10,11 @@ static ID: ID = "menu";
 static NAME: NAME = "菜单";
 
 pub fn module() -> Module {
-    module!(ID, NAME, on_message)
+    module!(ID, NAME, menu)
 }
 
 #[event]
-async fn on_message(event: &MessageEvent) -> anyhow::Result<bool> {
+async fn menu(event: &MessageEvent) -> anyhow::Result<bool> {
     let content = event.message_content();
     if content.eq(NAME) {
         // 后续考虑使用更好看的格式并且以图片形式发送

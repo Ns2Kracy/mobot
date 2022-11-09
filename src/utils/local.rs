@@ -12,7 +12,6 @@ pub(crate) fn template_dir() -> String {
     "/tmp".to_owned()
 }
 
-
 /// 取临时文件目录
 #[allow(unused)]
 #[cfg(target_os = "windows")]
