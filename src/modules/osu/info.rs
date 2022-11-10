@@ -1,14 +1,14 @@
 use anyhow::{Ok, Result};
 use proc_qq::{event, module, MessageEvent, Module};
 
-use crate::modules::types::{ID, MENU, NAME};
+use crate::modules::types::{COMMAND, MENU, NAME};
 
-const ID: ID = "info";
+const COMMAND: COMMAND = "info";
 const NAME: NAME = "osu! info";
 const MENU: MENU = "osu! info";
 
 pub fn module() -> Module {
-    module!(ID, NAME, info)
+    module!(COMMAND, NAME, info)
 }
 
 #[event]

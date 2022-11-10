@@ -4,14 +4,14 @@ use proc_qq::{
     MessageSendToSourceTrait, Module,
 };
 
-use crate::modules::types::{ID, NAME};
+use crate::modules::types::{COMMAND, NAME};
 // 俄罗斯轮盘赌
 
-const ID: ID = "roulette";
-const NAME: NAME = "俄罗斯轮盘赌";
+const COMMAND: COMMAND = ".roulette";
+const NAME: NAME = "[ .roulette ] 俄罗斯轮盘赌";
 
 pub fn module() -> Module {
-    module!(ID, NAME, roulette)
+    module!(COMMAND, NAME, roulette)
 }
 
 /// 轮盘赌流程

@@ -4,14 +4,14 @@ use proc_qq::{
     MessageEvent, MessageSendToSourceTrait, Module,
 };
 
-use super::types::{ID, NAME};
+use super::types::{COMMAND, NAME};
 
-static ID: ID = "ignore";
+static COMMAND: COMMAND = ".ignore";
 static NAME: NAME = "";
 
 pub fn module() -> Module {
     module!(
-        ID,
+        COMMAND,
         NAME,
         on_message,
         on_friend_message,

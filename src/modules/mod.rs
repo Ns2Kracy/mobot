@@ -2,7 +2,9 @@ use lazy_static::lazy_static;
 use proc_qq::Module;
 use std::sync::Arc;
 
-mod group_admin;
+use crate::modules::osu::help::osu_help;
+
+mod ban;
 mod types;
 // 菜单模块
 mod menu;
@@ -17,15 +19,25 @@ mod game;
 mod random_image;
 
 lazy_static! {
-    static ref MODULES: Arc<Vec<Module>> = Arc::new(vec![
-        // 菜单模块
+    static ref MAIN_MENU_MODULES: Arc<Vec<Module>> = Arc::new(vec![
         menu::module(),
-        // 忽视名单
+        game::help::module(),
+        osu::help::module(),
+    ]);
+    static ref MODULES: Arc<Vec<Module>> = Arc::new(vec![
+        // 这里是 bot 相关的 module
+        menu::module(),
+        ban::module(),
         ignore::module(),
-        // 俄罗斯轮盘赌
-        game::russian_roulette::roulette::module(),
-        // 群管理模块
-        group_admin::module(),
+
+        // 这里是 game 相关的 module
+        game::roulette::module(),
+        game::guessing_box::module(),
+
+        // 这里是 osu! 相关的 module
+        osu::bind::module(),
+        osu::info::module(),
+
     ]);
 }
 
@@ -49,9 +61,10 @@ lazy_static! {
 ///    static ref MODULES: Arc<Vec<Module>> = Arc::new(vec![]);
 /// }
 ///
-/// pub fn module() -> Arc<Vec<Module>> {
+/// pub fn all_module() -> Arc<Vec<Module>> {
 ///     let mut modules = MODULES.clone();
 ///     modules.extend(osu::osu_module().clone().into_iter());
+///     modules
 /// }
 /// ```
 /// 避免在这里注册所有模块导致代码臃肿
