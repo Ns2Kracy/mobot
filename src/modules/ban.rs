@@ -3,8 +3,8 @@ use anyhow::Ok;
 use lazy_static::lazy_static;
 use proc_qq::re_exports::ricq_core::msg::elem::RQElem;
 use proc_qq::{
-    event, module, ClientTrait, GroupTrait, MemberTrait, MessageChainAppendTrait,
-    MessageChainParseTrait, MessageContentTrait, MessageEvent, MessageSendToSourceTrait, Module,
+    event, module, ClientTrait, GroupTrait, MemberTrait, MessageChainParseTrait,
+    MessageContentTrait, MessageEvent, MessageSendToSourceTrait, Module,
 };
 use regex::Regex;
 use std::time::Duration;

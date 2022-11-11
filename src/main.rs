@@ -1,12 +1,12 @@
-use std::sync::Arc;
-
 use mobot::config::load_config;
+use mobot::database::mysql::init_mysql;
 use mobot::database::redis::init_redis;
 use mobot::modules;
 use proc_qq::re_exports::ricq::version::MACOS;
 #[allow(unused_imports)]
 use proc_qq::Authentication::{QRCode, UinPassword};
 use proc_qq::*;
+use std::sync::Arc;
 use tracing::Level;
 use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
@@ -16,7 +16,7 @@ async fn main() -> anyhow::Result<()> {
     init_tracing_subscriber();
     let config = load_config().await?;
     init_redis(&config.redis).await?;
-
+    init_mysql(&config.mysql).await?;
     let client = ClientBuilder::new()
         .device(DeviceSource::JsonFile("device.json".to_owned()))
         .version(&MACOS)

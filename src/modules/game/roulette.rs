@@ -1,11 +1,9 @@
+use crate::modules::types::{COMMAND, NAME};
 use anyhow::Ok;
 use proc_qq::{
     event, module, MessageChainParseTrait, MessageContentTrait, MessageEvent,
     MessageSendToSourceTrait, Module,
 };
-
-use crate::modules::types::{COMMAND, NAME};
-// 俄罗斯轮盘赌
 
 const COMMAND: COMMAND = ".roulette";
 const NAME: NAME = "[ .roulette ] 俄罗斯轮盘赌";
@@ -24,7 +22,7 @@ pub fn module() -> Module {
 #[event]
 async fn roulette(event: &MessageEvent) -> anyhow::Result<bool> {
     let content = event.message_content();
-    if content.eq("mo轮盘") {
+    if content.eq(COMMAND) {
         event
             .send_message_to_source("俄罗斯轮盘赌".parse_message_chain())
             .await?;

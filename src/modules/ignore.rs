@@ -1,10 +1,9 @@
+use super::types::{COMMAND, NAME};
 /// 屏蔽一些特殊账号的消息
 use proc_qq::{
     event, module, ClientTrait, FriendMessageEvent, GroupMessageEvent, GroupTempMessageEvent,
     MessageEvent, MessageSendToSourceTrait, Module,
 };
-
-use super::types::{COMMAND, NAME};
 
 static COMMAND: COMMAND = ".ignore";
 static NAME: NAME = "";

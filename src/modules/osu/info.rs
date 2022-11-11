@@ -1,11 +1,9 @@
-use anyhow::{Ok, Result};
-use proc_qq::{event, module, MessageEvent, Module};
+use crate::modules::types::{COMMAND, NAME};
+use anyhow::Ok;
+use proc_qq::{event, module, MessageContentTrait, MessageEvent, Module};
 
-use crate::modules::types::{COMMAND, MENU, NAME};
-
-const COMMAND: COMMAND = "info";
-const NAME: NAME = "osu! info";
-const MENU: MENU = "osu! info";
+const COMMAND: COMMAND = ".info";
+const NAME: NAME = "[ .info ] 查询玩家信息";
 
 pub fn module() -> Module {
     module!(COMMAND, NAME, info)
@@ -13,5 +11,6 @@ pub fn module() -> Module {
 
 #[event]
 async fn info(event: &MessageEvent) -> anyhow::Result<bool> {
+    let _content = event.message_content();
     Ok(true)
 }

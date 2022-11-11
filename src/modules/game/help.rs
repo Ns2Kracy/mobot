@@ -1,9 +1,6 @@
-use crate::modules::{
-    game::{guessing_box, roulette},
-    types::{COMMAND, NAME},
-};
+use super::game_modules;
+use crate::modules::types::{COMMAND, NAME};
 use anyhow::Ok;
-use lazy_static::lazy_static;
 use proc_qq::{
     event, module, MessageChainParseTrait, MessageContentTrait, MessageEvent,
     MessageSendToSourceTrait, Module,
@@ -17,20 +14,14 @@ pub fn module() -> Module {
     module!(COMMAND, NAME, game_help)
 }
 
-lazy_static! {
-    pub static ref GAME_MODULES: Arc<Vec<Module>> =
-        Arc::new(vec![guessing_box::module(), roulette::module()]);
-}
-
 #[event]
 async fn game_help(event: &MessageEvent) -> anyhow::Result<bool> {
     let content = event.message_content();
     if content.eq(COMMAND) {
-        // osu! help
-        let mut help = vec!["game lists: ".to_owned()];
-        for (module_index, module) in GAME_MODULES.as_ref().iter().enumerate() {
+        let mut help = vec!["game list: ".to_owned()];
+        for (module_index, module) in Arc::new(game_modules()).as_ref().iter().enumerate() {
             if module.name != "" {
-                help.push(format!("\n {}. {}", module_index, module.name));
+                help.push(format!("\n {}. {}", module_index + 1, module.name));
             }
         }
         event

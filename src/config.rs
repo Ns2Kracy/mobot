@@ -12,9 +12,11 @@ pub struct Account {
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Mongo {
+pub struct Mysql {
     pub host: String,
     pub port: u32,
+    pub user: String,
+    pub password: String,
     pub database: String,
 }
 
@@ -27,7 +29,7 @@ pub struct Redis {
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Config {
     pub account: Account,
-    pub mongo: Mongo,
+    pub mysql: Mysql,
     pub redis: Redis,
 }
 
@@ -37,10 +39,12 @@ pub async fn load_config() -> anyhow::Result<Config> {
             uin: 123456789,
             password: "echo -n password".to_string(),
         },
-        mongo: Mongo {
+        mysql: Mysql {
             host: "127.0.0.1".to_string(),
-            port: 27017,
-            database: "bot".to_string(),
+            port: 3306,
+            user: "root".to_string(),
+            password: "password".to_string(),
+            database: "mobot".to_string(),
         },
         redis: Redis {
             host: "127.0.0.1".to_string(),
