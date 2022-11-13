@@ -18,11 +18,11 @@ pub async fn init_mysql(mysql: &Mysql) -> anyhow::Result<()> {
     Ok(())
 }
 
-#[instrument]
 pub async fn get_conn() -> PooledConn {
-    DB_POOL
+    let conn = DB_POOL
         .get()
         .expect("无法从连接池中获取连接")
         .get_conn()
-        .expect("链接失败")
+        .expect("链接失败");
+    conn
 }
