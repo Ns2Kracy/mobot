@@ -24,6 +24,7 @@ serde = { version = "1.0.147", features = ["derive"] }
 rand = "0.8.5"
 image = "0.24.4"
 imageproc = "0.23.0"
-mysql = "*"
 chrono = "0.4.22"
 oauth2 = "4.3.0"
+rocket = "0.5.0-rc.2"
+mysql = { version = "22.2.0", features = ["nightly"] }

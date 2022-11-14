@@ -20,17 +20,11 @@ pub struct Mysql {
     pub database: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct Redis {
-    pub host: String,
-    pub port: i32,
-}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Config {
     pub account: Account,
     pub mysql: Mysql,
-    pub redis: Redis,
 }
 
 pub async fn load_config() -> anyhow::Result<Config> {
@@ -46,10 +40,7 @@ pub async fn load_config() -> anyhow::Result<Config> {
             password: "password".to_string(),
             database: "mobot".to_string(),
         },
-        redis: Redis {
-            host: "127.0.0.1".to_string(),
-            port: 6379,
-        },
+
     };
     if Path::new(CONFIG_FILE_PATH).exists() {
         config = serde_yaml::from_str(&std::fs::read_to_string(CONFIG_FILE_PATH)?)?;

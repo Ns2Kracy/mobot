@@ -1,6 +1,5 @@
 use mobot::config::load_config;
 use mobot::database::mysql::init_mysql;
-use mobot::database::redis::init_redis;
 use mobot::modules;
 use proc_qq::re_exports::ricq::version::MACOS;
 #[allow(unused_imports)]
@@ -15,7 +14,6 @@ use tracing_subscriber::util::SubscriberInitExt;
 async fn main() -> anyhow::Result<()> {
 	init_tracing_subscriber();
 	let config = load_config().await?;
-	init_redis(&config.redis).await?;
 	init_mysql(&config.mysql).await?;
 
 	tracing::info!("Starting Mobot Server...");
