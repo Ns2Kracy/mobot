@@ -1,5 +1,5 @@
-use super::types::{COMMAND, NAME};
 /// 屏蔽一些特殊账号的消息
+use crate::modules::types::{COMMAND, NAME};
 use proc_qq::{
     event, module, ClientTrait, FriendMessageEvent, GroupMessageEvent, GroupTempMessageEvent,
     MessageEvent, MessageSendToSourceTrait, Module,

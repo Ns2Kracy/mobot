@@ -19,7 +19,7 @@ async fn guessing_box(event: &MessageEvent) -> anyhow::Result<bool> {
     let content = event.message_content();
     if content.eq(COMMAND) {
         event
-            .send_message_to_source("猜拳".parse_message_chain())
+            .send_message_to_source("开发中".parse_message_chain())
             .await?;
         Ok(true)
     } else {
