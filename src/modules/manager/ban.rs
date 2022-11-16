@@ -8,6 +8,7 @@ use proc_qq::{
 };
 use regex::Regex;
 use std::time::Duration;
+
 static COMMAND: &'static str = ".ban";
 static NAME: &'static str = "[ .ban ] 禁言";
 
@@ -95,8 +96,6 @@ async fn on_message(event: &MessageEvent) -> anyhow::Result<bool> {
 #[cfg(test)]
 mod test {
 
-    #[test]
-    fn test_ban() {
-        
-    }
+	#[test]
+	fn test_ban() {}
 }

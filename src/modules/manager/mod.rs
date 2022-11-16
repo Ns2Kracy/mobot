@@ -1,3 +1,4 @@
+mod ban;
+mod ignore;
+mod mobot;
 pub mod menu;
-pub mod ignore;
-pub mod ban;

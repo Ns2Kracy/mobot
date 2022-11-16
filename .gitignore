@@ -2,7 +2,8 @@
 qrcode.png
 /idea
 /.vscode
-device.json
 bot.yaml
 session.token
-Cargo.lock
+/logs
+/images
+device.json

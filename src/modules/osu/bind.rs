@@ -1,7 +1,7 @@
 use super::api;
 use crate::{
 	database::mysql::get_conn,
-	modules::types::{COMMAND, NAME},
+	modules::{COMMAND, NAME},
 };
 use anyhow::Ok;
 use mysql::PooledConn;

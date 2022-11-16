@@ -1,8 +1,5 @@
-use super::{ban, ignore};
-use crate::modules::{
-	game, osu,
-	types::{COMMAND, NAME},
-};
+use super::{ban, ignore, mobot};
+use crate::modules::{game, osu, COMMAND, NAME};
 use proc_qq::{
 	event, module, MessageChainParseTrait, MessageContentTrait, MessageEvent,
 	MessageSendToSourceTrait, Module,
@@ -10,11 +7,11 @@ use proc_qq::{
 use std::sync::Arc;
 
 static COMMAND: COMMAND = ".menu";
-static NAME: NAME = "[ .menu ] Mo所持有的力量";
+static NAME: NAME = "[ .menu ] mo所持有的力量";
 
 pub fn menu_modules() -> Vec<Module> {
 	let modules =
-		vec![ignore::module(), module(), ban::module(), osu::help::module(), game::help::module()];
+		vec![ignore::module(), module(), ban::module(), mobot::module(), osu::help::module(), game::help::module()];
 	modules
 }
 

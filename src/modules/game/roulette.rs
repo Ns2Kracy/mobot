@@ -1,12 +1,12 @@
-use crate::modules::types::{COMMAND, NAME};
+use crate::modules::{COMMAND, NAME};
 use anyhow::Ok;
 use proc_qq::{
 	event, module, MessageChainParseTrait, MessageContentTrait, MessageEvent,
 	MessageSendToSourceTrait, Module,
 };
 
-const COMMAND: COMMAND = ".roulette";
-const NAME: NAME = "[ .roulette ] 俄罗斯轮盘赌";
+const COMMAND: COMMAND = "轮盘";
+const NAME: NAME = "[ 轮盘 ] ";
 
 pub fn module() -> Module {
 	module!(COMMAND, NAME, roulette)

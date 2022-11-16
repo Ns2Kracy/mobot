@@ -1,4 +1,4 @@
-use crate::modules::types::{COMMAND, NAME};
+use crate::modules::{COMMAND, NAME};
 use anyhow::Ok;
 use proc_qq::{
 	event, module, MessageChainParseTrait, MessageContentTrait, MessageEvent,
