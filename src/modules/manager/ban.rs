@@ -37,7 +37,9 @@ async fn on_message(event: &MessageEvent) -> anyhow::Result<bool> {
 		if not_in_group_and_reply(event).await? {
 			return Ok(true);
 		}
-		event.reply_text(String::from(".ban 禁言时间 @p1 @p2 @p3 ...").as_str()).await?;
+		event
+			.reply_text(String::from(".ban 禁言时间 @p1 @p2 @p3 ...").as_str())
+			.await?;
 		return Ok(true);
 	}
 	if !event.is_group_message() {
@@ -45,14 +47,13 @@ async fn on_message(event: &MessageEvent) -> anyhow::Result<bool> {
 	}
 	let group_message = event.as_group_message()?;
 	if BAN_AT_TIME_REGEX.is_match(&content) {
-		// todo 缓存?
 		let group = event.must_find_group(group_message.inner.group_code).await?;
 		let list = group_message.client.get_group_member_list(group.code, group.owner_uin).await?;
 		let caller_member = list.must_find_member(event.from_uin()).await?;
 		let bot_member = list.must_find_member(event.bot_uin().await).await?;
 
 		if caller_member.is_member() {
-			group_message.reply_text("您必须是群主或管理员才能使用").await?;
+			group_message.reply_text("您必须是群主或管理员才能使用".trim_start()).await?;
 			return Ok(true);
 		}
 		if bot_member.is_member() {
@@ -82,9 +83,11 @@ async fn on_message(event: &MessageEvent) -> anyhow::Result<bool> {
 							Duration::from_secs(time),
 						)
 						.await?;
+					tracing::info!("{}被禁言{}秒", id.target, time);
 				}
 				_ => {
 					event.send_message_to_source("无法禁言".parse_message_chain()).await?;
+					break;
 				}
 			}
 		}

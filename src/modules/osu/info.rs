@@ -5,8 +5,8 @@ use proc_qq::{
 	MessageSendToSourceTrait, Module,
 };
 
-const COMMAND: COMMAND = ".info";
-const NAME: NAME = "[ .info ] 查询玩家信息";
+const COMMAND: COMMAND = "查";
+const NAME: NAME = "[ 查 ] 查@某人";
 
 pub fn module() -> Module {
 	module!(COMMAND, NAME, info)

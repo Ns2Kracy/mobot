@@ -21,7 +21,7 @@ impl CanReply for GroupMessageEvent {
 	async fn make_reply_chain(&self) -> MessageChain {
 		let mut at = At::new(self.inner.from_uin);
 		at.display = format!("@{}", self.inner.group_card);
-		MessageChain::default().append(at).append("\n\n".parse_text())
+		MessageChain::default().append(at).append("\n".parse_text())
 	}
 
 	async fn reply_text(&self, text: &str) -> RQResult<()> {

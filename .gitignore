@@ -7,3 +7,4 @@ session.token
 /logs
 /images
 device.json
+/src/mobot.txt

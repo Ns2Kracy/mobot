@@ -1,12 +1,11 @@
 use proc_qq::Module;
 
 mod api;
-mod bind;
+pub mod bind;
 mod enums;
 pub mod help;
-mod info;
+pub mod info;
 
 pub fn osu_modules() -> Vec<Module> {
-	let modules = vec![info::module(), bind::module()];
-	modules
+	vec![help::module(), info::module(), bind::module()]
 }

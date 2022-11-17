@@ -25,6 +25,7 @@ async fn game_help(event: &MessageEvent) -> anyhow::Result<bool> {
 			}
 		}
 		event.send_message_to_source(help.join("").parse_message_chain()).await?;
+		tracing::info!("\n{}", help.join(""));
 		Ok(true)
 	} else {
 		Ok(false)

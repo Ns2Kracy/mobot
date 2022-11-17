@@ -5,12 +5,11 @@ use proc_qq::re_exports::ricq::version::MACOS;
 use proc_qq::Authentication::UinPassword;
 use proc_qq::*;
 use std::sync::Arc;
-use tracing::{instrument, Level};
+use tracing::Level;
 use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
 
 #[tokio::main]
-#[instrument]
 async fn main() -> anyhow::Result<()> {
 	init_tracing_subscriber();
 	let config = load_config().await?;
@@ -28,7 +27,8 @@ async fn main() -> anyhow::Result<()> {
 		.build()
 		.await
 		.unwrap();
-	// 可以做一些定时任务, rq_client在一开始可能没有登录好
+	// let mobot = tokio::fs::read_to_string("src\\mobot.txt").await?;
+	// tracing::info!(mobot);
 	let client = Arc::new(client);
 	let copy = client.clone();
 	tokio::spawn(async move {
@@ -40,7 +40,7 @@ async fn main() -> anyhow::Result<()> {
 
 fn init_tracing_subscriber() {
 	let mut guards = Vec::new();
-	let file_appender = tracing_appender::rolling::daily("./logs", "mobot.log");
+	let file_appender = tracing_appender::rolling::never("./logs", "mobot.log");
 	let (non_blocking, guard) = tracing_appender::non_blocking(file_appender);
 	guards.push(guard);
 	let bot_layer = tracing_subscriber::filter::Targets::new()
@@ -49,6 +49,10 @@ fn init_tracing_subscriber() {
 		.with_target("mobot", Level::DEBUG);
 	let file_layer =
 		tracing_subscriber::fmt::layer().pretty().with_ansi(false).with_writer(non_blocking);
-	let console_layer = tracing_subscriber::fmt::layer().pretty().with_writer(std::io::stderr);
+	let console_layer = tracing_subscriber::fmt::layer()
+		.pretty()
+		.without_time()
+		.with_ansi(true)
+		.with_target(true);
 	tracing_subscriber::registry().with(file_layer).with(bot_layer).with(console_layer).init();
 }

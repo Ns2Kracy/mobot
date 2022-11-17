@@ -1,9 +1,9 @@
-use crate::modules::manager::menu;
 use lazy_static::lazy_static;
 use proc_qq::Module;
 use std::sync::Arc;
 
 mod game;
+mod image_lib;
 mod manager;
 mod osu;
 
@@ -13,10 +13,16 @@ pub(crate) type NAME = &'static str;
 lazy_static! {
 	static ref MODULES: Arc<Vec<Module>> = {
 		Arc::new(
-			vec![menu::menu_modules(), game::game_modules(), osu::osu_modules()]
-				.into_iter()
-				.flatten()
-				.collect::<Vec<Module>>(),
+			vec![
+				manager::manager_modules(),
+				osu::osu_modules(),
+				game::game_modules(),
+				image_lib::image_lib_modules(),
+			]
+			.into_iter()
+			.map(|modules| modules.into_iter())
+			.flatten()
+			.collect(),
 		)
 	};
 }

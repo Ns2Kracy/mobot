@@ -1,5 +1,5 @@
 use super::{ban, ignore, mobot};
-use crate::modules::{game, osu, COMMAND, NAME};
+use crate::modules::{game, image_lib, osu, COMMAND, NAME};
 use proc_qq::{
 	event, module, MessageChainParseTrait, MessageContentTrait, MessageEvent,
 	MessageSendToSourceTrait, Module,
@@ -10,9 +10,15 @@ static COMMAND: COMMAND = ".menu";
 static NAME: NAME = "[ .menu ] mo所持有的力量";
 
 pub fn menu_modules() -> Vec<Module> {
-	let modules =
-		vec![ignore::module(), module(), ban::module(), mobot::module(), osu::help::module(), game::help::module()];
-	modules
+	vec![
+		ignore::module(),
+		module(),
+		ban::module(),
+		mobot::module(),
+		osu::help::module(),
+		game::help::module(),
+		image_lib::help::module(),
+	]
 }
 
 pub fn module() -> Module {
@@ -31,6 +37,7 @@ async fn menu(event: &MessageEvent) -> anyhow::Result<bool> {
 			}
 		}
 		event.send_message_to_source(menu.join("").parse_message_chain()).await?;
+		tracing::info!("\n{}", menu.join(""));
 		Ok(true)
 	} else {
 		Ok(false)
